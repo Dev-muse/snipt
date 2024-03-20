@@ -2,25 +2,31 @@
 
 import { db } from '@/db';
 import { redirect } from 'next/navigation';
+// on demand caching
+import { revalidatePath } from 'next/cache';
 
-export const editSnippet = async (id:number , code:string,title:string)=>{
+
+export async function editSnippet(id:number , code:string){
      await db.snippet.update({
         // what record to update
         where:{id},
         // what new data
         data:{
-            code,
-            title
+            code
         }
 
      })
+
+     revalidatePath(`/snippets/${id}`)
      redirect(`/snippets/${id}`)
 }
 
-export const deleteSnippet = async(id:number)=>{
+export async function deleteSnippet(id:number){
     await db.snippet.delete({
         where:{id}
     })
+    // need fresh data on homepage
+    revalidatePath('/')
     redirect('/')
 }
 
@@ -66,7 +72,9 @@ export async function createSnippet(
     }
 
    }
-
+   
+    // need fresh data on homepage
+    revalidatePath('/')
     // redirect to homepage after submit 
     redirect('/')
 }

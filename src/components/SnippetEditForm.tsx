@@ -14,27 +14,18 @@ const SnippetEditForm = ({snippet}:SnippetEditFormProps) => {
      
 
     const [code, setCode] = useState(snippet.code)
-    const [title, setTitle] = useState(snippet.title)
-
-    const handleTitleChange = (event:any)=>{
-        console.log(event.target.value)
-        setTitle(event.target.value)
-    }
-
+ 
+    
     const handleEditorChange=(value:string='')=>{
         setCode(value)
     }
 
-    const editSnippetAction= actions.editSnippet.bind(null, snippet.id,code,title);
+    const editSnippetAction= actions.editSnippet.bind(null, snippet.id,code);
 
   return (
     <div className='space-y-8'>
         <h1 className="text-6xl py-4 font-bold text-center text-green-600 ">Editing: {snippet.title}</h1>
-        <label htmlFor="title" className='placeholder:italic placeholder:font-extralight text-lg font-semibold'>
-            Title:
-            <input type="text" name='title' placeholder='Enter code title' value={title} onChange={handleTitleChange} 
-            className='border ml-2 px-4 border-green-400'/>
-        </label>
+       
         <Editor 
         height={'40vh'}
         theme='vs-dark'

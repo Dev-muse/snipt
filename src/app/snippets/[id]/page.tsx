@@ -13,7 +13,7 @@ interface snippetProps{
 
 const SnippetShowPage = async ({params}:snippetProps) => {
   
-    const snippet = await db.snippet.findFirst({
+    const snippets = await db.snippet.findFirst({
         where:{
             id: Number(params.id)
         }
@@ -47,3 +47,19 @@ const SnippetShowPage = async ({params}:snippetProps) => {
 }
 
 export default SnippetShowPage
+
+
+export async function generateStaticParams(){
+    const snippets = await db.snippet.findMany();
+
+    // next needs an id value to be a string to create cached pages
+    return ( 
+        snippets.map((snippet)=>{
+            return {
+                id:snippet.id.toString(),
+            }
+        })
+    )
+
+
+}
