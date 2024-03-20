@@ -25,7 +25,7 @@ const [formState,action] = useFormState(actions.createSnippet,{message:''})
           </div>
 
             {
-              formState.message ? (<p className='text-red-500 font-bold '>{formState.message}</p>): null
+              formState.message ? (<p className='text-red-500 font-bold '>{formState.message}</p>): ''
             }
        
           <button className=" rounded p-2 duration-300 font-bold hover:bg-green-800 bg-green-600 text-white px-2 py-4" type='submit'>Save</button>
